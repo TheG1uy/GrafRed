@@ -102,6 +102,53 @@ namespace PhotoRed
          createGaussianKernel(3, 2);
      }
  }
+ class SobelFilter : MatrixFilter
+ {
+     public SobelFilter() { }
+     protected override Color calculateNewPixelColor(Bitmap im, int x, int y)
+     {
+         float resultR1 = 0;
+         float resultG1 = 0;
+         float resultB1 = 0;
+         float resultR2 = 0;
+         float resultG2 = 0;
+         float resultB2 = 0;
+         kernel = new float[3, 3]{
+             {-1,-2,-1},
+             {0,0,0},
+             {1,2,1}
+        };
+         int radiusX = kernel.GetLength(0) / 2;
+         int radiusY = kernel.GetLength(1) / 2;
+         for (int l = -radiusY; l <= radiusY; l++)
+             for (int k = -radiusX; k <= radiusX; k++)
+             {
+                 int idX = Clamp(x + k, 0, im.Width - 1);
+                 int idY = Clamp(y + l, 0, im.Height - 1);
+                 Color neighborColor = im.GetPixel(idX, idY);
+                 resultR1 += neighborColor.R * kernel[k + radiusX, l + radiusY];
+                 resultG1 += neighborColor.G * kernel[k + radiusX, l + radiusY];
+                 resultB1 += neighborColor.B * kernel[k + radiusX, l + radiusY];
+             }
+         kernel = new float[3, 3]{
+             {-1,0,1},
+             {-2,0,2},
+             {-1,0,1}
+        };
+         for (int l = -radiusY; l <= radiusY; l++)
+             for (int k = -radiusX; k <= radiusX; k++)
+             {
+                 int idX = Clamp(x + k, 0, im.Width - 1);
+                 int idY = Clamp(y + l, 0, im.Height - 1);
+                 Color neighborColor = im.GetPixel(idX, idY);
+                 resultR2 += neighborColor.R * kernel[k + radiusX, l + radiusY];
+                 resultG2 += neighborColor.G * kernel[k + radiusX, l + radiusY];
+                 resultB2 += neighborColor.B * kernel[k + radiusX, l + radiusY];
+             }
+         int sum = (int)Math.Sqrt(resultR1 * resultR1 + resultR2 * resultR2 + resultG1 * resultG1 + resultG2 * resultG2+resultB1 * resultB1 + resultB2 * resultB2)/3;
+         return Color.FromArgb(Clamp((int)sum, 0, 255), Clamp((int)sum, 0, 255), Clamp((int)sum, 0, 255));
+     }
+ }
 }
 
 
