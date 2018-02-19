@@ -19,8 +19,8 @@ namespace PhotoRed
 
         private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog=new OpenFileDialog();
-            dialog.Filter="Image files | *.png; *.jpg; *.bmp; | All Files (*.*) | *.*";
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Image files | *.png; *.jpg; *.bmp; | All Files (*.*) | *.*";
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 image = new Bitmap(dialog.FileName);
@@ -31,14 +31,14 @@ namespace PhotoRed
 
         private void инверсияToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            InvertFilter filter=new InvertFilter();
+            InvertFilter filter = new InvertFilter();
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             Bitmap newImage = ((Filters)e.Argument).processImage(image, backgroundWorker1);
-            if (backgroundWorker1.CancellationPending !=true) image=newImage;
+            if (backgroundWorker1.CancellationPending != true) image = newImage;
 
         }
 
@@ -61,9 +61,18 @@ namespace PhotoRed
         {
             backgroundWorker1.CancelAsync();
         }
-    }
-   /* class MatrixFilter : Filters
-    {
 
-    }*/
+        private void размытиеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new BlurFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void gaussToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Filters filter = new GaussianFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+    }
+
 }
