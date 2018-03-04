@@ -11,6 +11,8 @@ namespace PhotoRed
 {
     public partial class Form1 : Form
     {
+        private float[,] mas;
+        Form2 fm;
         Bitmap image;
         TStack<Bitmap> st,stO;
         public Form1()
@@ -20,8 +22,16 @@ namespace PhotoRed
             stO = new TStack<Bitmap>(10);
             отменаToolStripMenuItem.Enabled = false;
             вернутьToolStripMenuItem.Enabled = false;
+            матМорфологияToolStripMenuItem.Enabled = false;
         }
-
+        public void getMas(float[,] arr,int size)
+        {
+            mas = new float[size, size];
+            for (int i = 0; i < size; i++)
+                for (int j = 0; j < size; j++)
+                    mas[i, j] = arr[i, j];
+            fm.Dispose();
+        }
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -181,6 +191,69 @@ namespace PhotoRed
                 }
                 fs.Close();
             }
+        }
+
+        private void medianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MedianFilter filter = new MedianFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void dilationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DilationFilter filter = new DilationFilter();
+            filter.setKernel(mas, mas.GetLength(0));
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void erosionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ErosionFilter filter = new ErosionFilter();
+            filter.setKernel(mas, mas.GetLength(0));
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void openingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Opening filter = new Opening();
+            filter.setKernel(mas, mas.GetLength(0));
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void closingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Closing filter = new Closing();
+            filter.setKernel(mas, mas.GetLength(0));
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void gradFilterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GradFilter filter = new GradFilter();
+            filter.setKernel(mas, mas.GetLength(0));
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void настроитьСтруктурныйЭлементToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            матМорфологияToolStripMenuItem.Enabled = true;
+            fm = new Form2(this);
+            fm.ShowDialog();
+
+        }
+
+        private void linearStretchingToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            LinearStretching filter = new LinearStretching();
+            filter.setMaxMinBrightness(image);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
+
+        private void greyWorldToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GreyWorldFilter filter = new GreyWorldFilter();
+            filter.setAveregeBrightness(image);
+            backgroundWorker1.RunWorkerAsync(filter);
         }
 
         private void CancelToolStripMenuItem_Click(object sender, EventArgs e)
