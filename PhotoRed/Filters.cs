@@ -728,6 +728,25 @@ namespace PhotoRed
 
         }
     }
+    class NewFilter : Filters
+    {
+        int gran;
+        public void cal(Bitmap im)
+        {
+            gran =(int) (float)(im.Height * 3) / 4;
+        }
+        protected override Color calculateNewPixelColor(Bitmap im, int x, int y)
+        {
+            if (y > gran)
+            {
+                Color sColor = im.GetPixel(x, y);
+                Color rColor = Color.FromArgb(255 - sColor.R, 255 - sColor.G, 255 - sColor.B);
+
+                return rColor;
+            }
+            else return im.GetPixel(x, y);
+        }
+    }
 
 }
 

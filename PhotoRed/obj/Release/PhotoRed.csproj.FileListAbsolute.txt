@@ -1,0 +1,8 @@
+C:\Users\Kumbrasev.p\Documents\GitHub\GrafRed\PhotoRed\bin\Release\PhotoRed.exe
+C:\Users\Kumbrasev.p\Documents\GitHub\GrafRed\PhotoRed\bin\Release\PhotoRed.pdb
+C:\Users\Kumbrasev.p\Documents\GitHub\GrafRed\PhotoRed\obj\Release\PhotoRed.Form1.resources
+C:\Users\Kumbrasev.p\Documents\GitHub\GrafRed\PhotoRed\obj\Release\PhotoRed.Form2.resources
+C:\Users\Kumbrasev.p\Documents\GitHub\GrafRed\PhotoRed\obj\Release\PhotoRed.Properties.Resources.resources
+C:\Users\Kumbrasev.p\Documents\GitHub\GrafRed\PhotoRed\obj\Release\PhotoRed.csproj.GenerateResource.Cache
+C:\Users\Kumbrasev.p\Documents\GitHub\GrafRed\PhotoRed\obj\Release\PhotoRed.exe
+C:\Users\Kumbrasev.p\Documents\GitHub\GrafRed\PhotoRed\obj\Release\PhotoRed.pdb

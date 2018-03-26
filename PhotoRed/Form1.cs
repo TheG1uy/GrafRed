@@ -269,6 +269,13 @@ namespace PhotoRed
 
 
         }
+
+        private void nEWFILTERToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NewFilter filter = new NewFilter();
+            filter.cal(image);
+            backgroundWorker1.RunWorkerAsync(filter);
+        }
     }
 
 }
